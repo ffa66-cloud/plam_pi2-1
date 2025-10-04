@@ -1,15 +1,13 @@
 #include <iostream>
 using namespace std;
 
+int power(double a, int b)
+{
+    cout<<a*b;
+}
 int main()
 {
-double first =4.3;
-int second =5;
-int power(first, second)
-{
-cout<<first*power;
-}
-
-
-
+    double first =4.3;
+    int second =5;
+    power(first, second);
 }
