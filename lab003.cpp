@@ -10,9 +10,7 @@ private:
     int minutes;
     int seconds;
 
-    // Вспомогательный метод для нормализации времени
     void normalize() {
-        // Обрабатываем секунды
         minutes += seconds / 60;
         seconds = seconds % 60;
         if (seconds < 0) {
@@ -20,7 +18,6 @@ private:
             minutes -= 1;
         }
         
-        // Обрабатываем минуты
         hours += minutes / 60;
         minutes = minutes % 60;
         if (minutes < 0) {
@@ -28,7 +25,6 @@ private:
             hours -= 1;
         }
         
-        // Обрабатываем часы
         hours = hours % 24;
         if (hours < 0) {
             hours += 24;
@@ -36,15 +32,12 @@ private:
     }
 
 public:
-    // 1. Конструктор без аргументов (по умолчанию)
     Time() : hours(0), minutes(0), seconds(0) {}
     
-    // 2. Конструктор инициализации числами
     Time(int h, int m, int s) : hours(h), minutes(m), seconds(s) {
         normalize();
     }
     
-    // 3. Конструктор инициализации строкой
     Time(const string &timeStr) {
         char colon;
         stringstream ss(timeStr);
@@ -52,7 +45,6 @@ public:
         normalize();
     }
     
-    // 4. Конструктор инициализации секундами
     Time(int totalSeconds) {
         hours = totalSeconds / 3600;
         minutes = (totalSeconds % 3600) / 60;
@@ -60,28 +52,24 @@ public:
         normalize();
     }
     
-    // 5. Конструктор копирования
     Time(const Time &other) {
         hours = other.hours;
         minutes = other.minutes;
         seconds = other.seconds;
     }
     
-    // Метод ввода с клавиатуры
     void read() {
         cout << "Введите время (часы минуты секунды): ";
         cin >> hours >> minutes >> seconds;
         normalize();
     }
     
-    // Метод вывода на экран
     void display() const {
         cout << (hours < 10 ? "0" : "") << hours << ":"
              << (minutes < 10 ? "0" : "") << minutes << ":"
              << (seconds < 10 ? "0" : "") << seconds;
     }
     
-    // Метод преобразования в строку
     string toString() const {
         stringstream ss;
         ss << (hours < 10 ? "0" : "") << hours << ":"
@@ -90,16 +78,13 @@ public:
         return ss.str();
     }
     
-    // ОБЯЗАТЕЛЬНЫЕ ОПЕРАЦИИ:
-    
-    // Вычисление разницы между двумя моментами времени в секундах
+
     int differenceInSeconds(const Time &other) const {
         int sec1 = hours * 3600 + minutes * 60 + seconds;
         int sec2 = other.hours * 3600 + other.minutes * 60 + other.seconds;
         return abs(sec1 - sec2);
     }
     
-    // Сложение времени и заданного количества секунд
     void addSeconds(int secondsToAdd) {
         int totalSeconds = toSeconds() + secondsToAdd;
         hours = totalSeconds / 3600;
@@ -108,7 +93,6 @@ public:
         normalize();
     }
     
-    // Сравнение моментов времени (-1: меньше, 0: равно, 1: больше)
     int compare(const Time &other) const {
         if (hours != other.hours) {
             return (hours < other.hours) ? -1 : 1;
@@ -122,58 +106,50 @@ public:
         return 0;
     }
     
-    // Перевод в секунды
+
     int toSeconds() const {
         return hours * 3600 + minutes * 60 + seconds;
     }
     
-    // Перевод в минуты (с округлением до целой минуты)
+   
     int toMinutes() const {
         return round(toSeconds() / 60.0);
     }
     
-    // Геттеры для доступа к полям (дополнительно)
+
     int getHours() const { return hours; }
     int getMinutes() const { return minutes; }
     int getSeconds() const { return seconds; }
 };
 
-// Демонстрация работы с объектами
 int main() {
     cout << "=== ДЕМОНСТРАЦИЯ РАБОТЫ КЛАССА TIME ===" << endl;
     cout << endl;
     
-    // 1. ДЕМОНСТРАЦИЯ РАЗЛИЧНЫХ СПОСОБОВ СОЗДАНИЯ ОБЪЕКТОВ
     cout << "1. СОЗДАНИЕ ОБЪЕКТОВ РАЗНЫМИ СПОСОБАМИ:" << endl;
     
-    // Способ 1: Конструктор без аргументов
     Time t1;
     cout << "Конструктор без аргументов: ";
     t1.display();
     cout << endl;
     
-    // Способ 2: Конструктор инициализации числами
     Time t2(10, 30, 45);
     cout << "Конструктор числами (10,30,45): " << t2.toString() << endl;
     
-    // Способ 3: Конструктор инициализации строкой
     Time t3("14:25:30");
     cout << "Конструктор строкой ('14:25:30'): " << t3.toString() << endl;
     
-    // Способ 4: Конструктор инициализации секундами
     Time t4(3665); // 3665 секунд = 1 час 1 минута 5 секунд
     cout << "Конструктор секундами (3665): " << t4.toString() << endl;
     
-    // Способ 5: Конструктор копирования
+
     Time t5(t2);
     cout << "Конструктор копирования (из t2): " << t5.toString() << endl;
     
     cout << endl;
     
-    // 2. ДЕМОНСТРАЦИЯ СОЗДАНИЯ МАССИВОВ ОБЪЕКТОВ
     cout << "2. РАБОТА С МАССИВАМИ ОБЪЕКТОВ:" << endl;
-    
-    // Массив, инициализированный конструктором по умолчанию
+
     Time times1[3];
     cout << "Массив Time times1[3] (по умолчанию): ";
     for (int i = 0; i < 3; i++) {
@@ -193,20 +169,20 @@ int main() {
     
     cout << endl;
     
-    // 3. ДЕМОНСТРАЦИЯ ВСЕХ ОБЯЗАТЕЛЬНЫХ ОПЕРАЦИЙ
+ 
     cout << "3. ОБЯЗАТЕЛЬНЫЕ ОПЕРАЦИИ:" << endl;
     
-    // Разница между двумя моментами времени в секундах
+ 
     cout << "Разница между " << t2.toString() << " и " << t3.toString() 
          << ": " << t2.differenceInSeconds(t3) << " секунд" << endl;
     
-    // Сложение времени и заданного количества секунд
-    Time t6(t2); // копируем t2
+ 
+    Time t6(t2); 
     cout << "До добавления секунд: " << t6.toString();
-    t6.addSeconds(150); // добавляем 150 секунд (2.5 минуты)
+    t6.addSeconds(150); 
     cout << ", после +150 секунд: " << t6.toString() << endl;
     
-    // Сравнение моментов времени
+   
     int compareResult = t2.compare(t3);
     cout << "Сравнение " << t2.toString() << " и " << t3.toString() << ": ";
     switch (compareResult) {
@@ -216,15 +192,15 @@ int main() {
     }
     cout << endl;
     
-    // Перевод в секунды
+
     cout << t2.toString() << " в секундах: " << t2.toSeconds() << endl;
     
-    // Перевод в минуты (с округлением)
+
     cout << t2.toString() << " в минутах: " << t2.toMinutes() << endl;
     
     cout << endl;
     
-    // 4. ДЕМОНСТРАЦИЯ ВВОДА С КЛАВИАТУРЫ
+
     cout << "4. ДЕМОНСТРАЦИЯ ВВОДА С КЛАВИАТУРЫ:" << endl;
     Time userTime;
     userTime.read();
@@ -232,29 +208,29 @@ int main() {
     
     cout << endl;
     
-    // 5. ТЕСТИРОВАНИЕ ГРАНИЧНЫХ СЛУЧАЕВ
+
     cout << "5. ТЕСТИРОВАНИЕ ГРАНИЧНЫХ СЛУЧАЕВ:" << endl;
     
-    // Переполнение
+
     Time overflow(23, 59, 59);
     cout << "Переполнение: " << overflow.toString();
     overflow.addSeconds(2);
     cout << " + 2 секунды = " << overflow.toString() << endl;
     
-    // Отрицательные значения
+ 
     Time negative(0, 0, -10);
     cout << "Отрицательные секунды (0,0,-10): " << negative.toString() << endl;
     
-    // Большие значения
+   
     Time big(25, 70, 80);
     cout << "Большие значения (25,70,80): " << big.toString() << endl;
     
     cout << endl;
     
-    // 6. ДОПОЛНИТЕЛЬНЫЕ ОПЕРАЦИИ
+   
     cout << "6. ДОПОЛНИТЕЛЬНЫЕ ТЕСТЫ:" << endl;
     
-    // Тест всех методов для одного объекта
+   
     Time test(15, 45, 30);
     cout << "Тестовое время: " << test.toString() << endl;
     cout << "Метод display(): "; test.display(); cout << endl;
