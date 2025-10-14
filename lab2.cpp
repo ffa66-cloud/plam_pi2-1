@@ -4,16 +4,14 @@
 #include <cmath>
 using namespace std;
 
-// Структура для работы со временем
 struct Time {
     int hours;
     int minutes;
     int seconds;
 };
 
-// Метод инициализации - нормализует время
+
 void init(Time &t, int h, int m, int s) {
-    // Обрабатываем секунды
     m += s / 60;
     s = s % 60;
     if (s < 0) {
@@ -21,7 +19,6 @@ void init(Time &t, int h, int m, int s) {
         m -= 1;
     }
     
-    // Обрабатываем минуты
     h += m / 60;
     m = m % 60;
     if (m < 0) {
@@ -29,7 +26,6 @@ void init(Time &t, int h, int m, int s) {
         h -= 1;
     }
     
-    // Обрабатываем часы
     h = h % 24;
     if (h < 0) {
         h += 24;
@@ -40,7 +36,6 @@ void init(Time &t, int h, int m, int s) {
     t.seconds = s;
 }
 
-// Ввод времени с клавиатуры
 void read(Time &t) {
     cout << "Введите время в формате 'часы минуты секунды': ";
     int h, m, s;
@@ -48,14 +43,12 @@ void read(Time &t) {
     init(t, h, m, s);
 }
 
-// Вывод времени на экран
 void display(const Time &t) {
     cout << (t.hours < 10 ? "0" : "") << t.hours << ":"
          << (t.minutes < 10 ? "0" : "") << t.minutes << ":"
          << (t.seconds < 10 ? "0" : "") << t.seconds;
 }
 
-// Преобразование в строку
 string toString(const Time &t) {
     stringstream ss;
     ss << (t.hours < 10 ? "0" : "") << t.hours << ":"
@@ -64,7 +57,6 @@ string toString(const Time &t) {
     return ss.str();
 }
 
-// Инициализация из строки формата "ЧЧ:ММ:СС"
 void initFromString(Time &t, const string &timeStr) {
     char colon;
     int h, m, s;
@@ -73,7 +65,6 @@ void initFromString(Time &t, const string &timeStr) {
     init(t, h, m, s);
 }
 
-// Инициализация из общего количества секунд
 void initFromSeconds(Time &t, int totalSeconds) {
     int h = totalSeconds / 3600;
     int m = (totalSeconds % 3600) / 60;
@@ -81,28 +72,23 @@ void initFromSeconds(Time &t, int totalSeconds) {
     init(t, h, m, s);
 }
 
-// Инициализация копированием из другого времени
 void initFromTime(Time &t, const Time &other) {
     t.hours = other.hours;
     t.minutes = other.minutes;
     t.seconds = other.seconds;
 }
 
-// Вычисление разницы между двумя моментами времени в секундах
 int differenceInSeconds(const Time &t1, const Time &t2) {
     int sec1 = t1.hours * 3600 + t1.minutes * 60 + t1.seconds;
     int sec2 = t2.hours * 3600 + t2.minutes * 60 + t2.seconds;
     return abs(sec1 - sec2);
 }
 
-// Сложение времени и заданного количества секунд
 void addSeconds(Time &t, int secondsToAdd) {
     int totalSeconds = t.hours * 3600 + t.minutes * 60 + t.seconds + secondsToAdd;
     initFromSeconds(t, totalSeconds);
 }
 
-// Сравнение моментов времени
-// Возвращает: -1 если t1 < t2, 0 если равны, 1 если t1 > t2
 int compare(const Time &t1, const Time &t2) {
     if (t1.hours != t2.hours) {
         return (t1.hours < t2.hours) ? -1 : 1;
@@ -116,47 +102,37 @@ int compare(const Time &t1, const Time &t2) {
     return 0;
 }
 
-// Перевод времени в секунды
 int toSeconds(const Time &t) {
     return t.hours * 3600 + t.minutes * 60 + t.seconds;
 }
 
-// Перевод времени в минуты (с округлением до целой минуты)
 int toMinutes(const Time &t) {
     double totalMinutes = (t.hours * 3600.0 + t.minutes * 60.0 + t.seconds) / 60.0;
     return round(totalMinutes);
 }
 
-// Демонстрация работы всех функций
 int main() {
     cout << "=== РАБОТА СО ВРЕМЕНЕМ ===" << endl;
     cout << endl;
     
-    // Создаем несколько переменных времени
     Time t1, t2, t3, t4;
     
-    // 1. Тестирование разных способов инициализации
     cout << "1. ТЕСТИРОВАНИЕ ИНИЦИАЛИЗАЦИИ:" << endl;
     
-    // Инициализация числами
     init(t1, 10, 30, 45);
     cout << "Инициализация числами (10, 30, 45): " << toString(t1) << endl;
     
-    // Инициализация из строки
     initFromString(t2, "14:25:30");
     cout << "Инициализация из строки ('14:25:30'): " << toString(t2) << endl;
     
-    // Инициализация из секунд
     initFromSeconds(t3, 3665); // 1 час 1 минута 5 секунд
     cout << "Инициализация из секунд (3665): " << toString(t3) << endl;
     
-    // Инициализация копированием
     initFromTime(t4, t1);
     cout << "Инициализация копированием (из t1): " << toString(t4) << endl;
     
     cout << endl;
     
-    // 2. Тестирование ввода с клавиатуры
     cout << "2. ТЕСТИРОВАНИЕ ВВОДА С КЛАВИАТУРЫ:" << endl;
     Time t5;
     read(t5);
@@ -166,21 +142,19 @@ int main() {
     
     cout << endl;
     
-    // 3. Тестирование операций со временем
     cout << "3. ТЕСТИРОВАНИЕ ОПЕРАЦИЙ:" << endl;
     
-    // Разница между временами
+    
     cout << "Разница между " << toString(t1) << " и " << toString(t2) 
          << " в секундах: " << differenceInSeconds(t1, t2) << endl;
     
-    // Сложение со секундами
+
     Time t6;
-    initFromTime(t6, t1); // Копируем t1
+    initFromTime(t6, t1); 
     cout << "До добавления секунд: " << toString(t6);
-    addSeconds(t6, 120); // Добавляем 2 минуты
+    addSeconds(t6, 120); 
     cout << ", после добавления 120 секунд: " << toString(t6) << endl;
     
-    // Сравнение времен
     int compResult = compare(t1, t2);
     cout << "Сравнение " << toString(t1) << " и " << toString(t2) << ": ";
     if (compResult < 0) cout << "t1 < t2";
@@ -188,40 +162,33 @@ int main() {
     else cout << "t1 = t2";
     cout << endl;
     
-    // Перевод в разные единицы
     cout << "Время " << toString(t1) << " в секундах: " << toSeconds(t1) << endl;
     cout << "Время " << toString(t1) << " в минутах: " << toMinutes(t1) << endl;
     
     cout << endl;
     
-    // 4. Тестирование граничных случаев
     cout << "4. ТЕСТИРОВАНИЕ ГРАНИЧНЫХ СЛУЧАЕВ:" << endl;
     
-    // Переполнение секунд
     Time t7;
-    init(t7, 0, 0, 125); // 125 секунд
+    init(t7, 0, 0, 125);
     cout << "125 секунд нормализуется в: " << toString(t7) << endl;
     
-    // Переполнение минут
     Time t8;
-    init(t8, 0, 75, 0); // 75 минут
+    init(t8, 0, 75, 0);
     cout << "75 минут нормализуется в: " << toString(t8) << endl;
     
-    // Переход через полночь
     Time t9;
     init(t9, 23, 59, 59);
     cout << "Перед полуночью: " << toString(t9);
     addSeconds(t9, 1);
     cout << ", после добавления 1 секунды: " << toString(t9) << endl;
     
-    // Отрицательные значения
     Time t10;
-    init(t10, 0, 0, -1); // -1 секунда
+    init(t10, 0, 0, -1); 
     cout << "-1 секунда нормализуется в: " << toString(t10) << endl;
     
     cout << endl;
     
-    // 5. Демонстрация всех методов для одного объекта
     cout << "5. ДЕМОНСТРАЦИЯ ВСЕХ МЕТОДОВ:" << endl;
     Time demoTime;
     
