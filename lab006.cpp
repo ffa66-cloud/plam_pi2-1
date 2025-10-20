@@ -118,3 +118,47 @@ public:
         }
         cout << endl;
     }
+    };
+
+int main() {
+    cout << "=== ЛАБОРАТОРНАЯ РАБОТА: ВИРТУАЛЬНЫЕ МЕТОДЫ ===" << endl;
+
+   
+    cout << "\n1. БАЗОВЫЙ КЛАСС ARRAY:" << endl;
+    Array arr1(5, 1);  // массив из 5 элементов со значением 1
+    cout << "arr1 = "; arr1.display();
+
+    cout<<"Проверка оператора []"<<endl;
+    cout << "arr1[2] = " << (int)arr1[2] << endl;
+    arr1[2] = 9;
+    cout << "После arr1[2] = 9: "; arr1.display();
+
+  
+    cout << "\n2. КЛАСС DECIMAL:" << endl;
+    Decimal dec1(3, 5);  // +555
+    Decimal dec2(2, 3);  // +33
+    
+    cout << "dec1 = "; dec1.displayDecimal();
+    cout << "dec2 = "; dec2.displayDecimal();
+
+   
+    cout << "\n3. КЛАСС HEX:" << endl;
+    Hex hex1(3, 10);  // 0xAAA (A=10)
+    Hex hex2(2, 5);   // 0x55
+    
+    cout << "hex1 = "; hex1.displayHex();
+    cout << "hex2 = "; hex2.displayHex();
+
+   
+    cout << "\n4. ВИРТУАЛЬНЫЕ ФУНКЦИИ СЛОЖЕНИЯ:" << endl;
+
+   
+    Array* ptr1 = &dec1;
+    Array* ptr2 = &hex1;
+    Array* ptr3 = &arr1;
+
+   
+    cout << "ptr1->add(dec2): "; 
+    Array* result1 = ptr1->add(dec2);
+    result1->display();
+    delete result1;
