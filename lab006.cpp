@@ -162,3 +162,56 @@ int main() {
     Array* result1 = ptr1->add(dec2);
     result1->display();
     delete result1;
+    
+    cout << "ptr2->add(hex2): ";
+    Array* result2 = ptr2->add(hex2);
+    result2->display();
+    delete result2;
+
+    cout << "ptr3->add(arr1): ";
+    Array* result3 = ptr3->add(arr1);
+    result3->display();
+    delete result3;
+
+  
+    cout << "\n5. МАССИВ УКАЗАТЕЛЕЙ НА БАЗОВЫЙ КЛАСС:" << endl;
+    Array* objects[3];
+    objects[0] = new Decimal(2, 7);  // +77
+    objects[1] = new Hex(2, 12);            // 0xCC
+    objects[2] = new Array(3, 2);           // [2,2,2]
+
+    for (int i = 0; i < 3; i++) {
+        cout << "objects[" << i << "] = ";
+        objects[i]->display();
+        
+        // Вызов виртуального метода
+        cout << "objects[" << i << "]->add(*objects[" << i << "]): ";
+        Array* result = objects[i]->add(*objects[i]);
+        result->display();
+        delete result;
+    }
+
+   
+    cout << "\n6. РАЗНЫЕ ВАРИАНТЫ ВЫЗОВА:" << endl;
+
+    // Прямой вызов
+    cout << "Прямой вызов dec1.add(dec2): ";
+    Array* directCall = dec1.add(dec2);
+    directCall->display();
+    delete directCall;
+
+    // Через ссылку базового класса
+    Array& ref = hex1;
+    cout << "Через ссылку ref.add(hex2): ";
+    Array* refCall = ref.add(hex2);
+    refCall->display();
+    delete refCall;
+
+    
+    for (int i = 0; i < 3; i++) {
+        delete objects[i];
+    }
+
+ 
+    return 0;
+}
