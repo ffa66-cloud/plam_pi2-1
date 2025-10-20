@@ -117,3 +117,24 @@ int main() {
     cout << "\n4. С noexcept (НЕ кидает исключения):" << endl;
     num = 25; den = 7;
     cout << "Целая часть " << num << "/" << den << " = " << wholePart4(num, den) << endl;
+      
+    num = 25; den = 0;
+    int result = wholePart4(num, den);
+    if (result == -1) {
+        cout << "Ошибка: деление на ноль (обработано через возвращаемое значение)" << endl;
+    } else {
+        cout << "Целая часть " << num << "/" << den << " = " << result << endl;
+    }
+    
+    
+    cout << "\n5. С НЕЗАВИСИМЫМ КЛАССОМ ИСКЛЮЧЕНИЯ:" << endl;
+    try {
+        num = 30; den = 8;
+        cout << "Целая часть " << num << "/" << den << " = " << wholePart5(num, den) << endl;
+        
+        num = 30; den = 0;
+        cout << "Целая часть " << num << "/" << den << " = " << wholePart5(num, den) << endl;
+    }
+    catch (FractionException& e) {
+        cout << "Поймано FractionException: " << e.message << endl;
+        cout << "Числитель: " << e.numerator << ", Знаменатель: " << e.denominator << endl;
