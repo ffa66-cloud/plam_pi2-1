@@ -138,3 +138,51 @@ int main() {
     catch (FractionException& e) {
         cout << "Поймано FractionException: " << e.message << endl;
         cout << "Числитель: " << e.numerator << ", Знаменатель: " << e.denominator << endl;
+            }
+    
+    cout << "\n6. С НАСЛЕДНИКОМ СТАНДАРТНОГО ИСКЛЮЧЕНИЯ:" << endl;
+    try {
+        num = 35; den = 9;
+        cout << "Целая часть " << num << "/" << den << " = " << wholePart6(num, den) << endl;
+        
+        num = 35; den = 0;
+        cout << "Целая часть " << num << "/" << den << " = " << wholePart6(num, den) << endl;
+    }
+    catch (MyFractionException& e) {
+        cout << "Поймано MyFractionException: " << e.what() << endl;
+        cout << "Числитель: " << e.numerator << ", Знаменатель: " << e.denominator << endl;
+    }
+    
+    cout << "\n7. ОБРАБОТКА ВСЕХ ИСКЛЮЧЕНИЙ ВМЕСТЕ:" << endl;
+    
+    // Массив функций для тестирования (кроме noexcept)
+    int (*functions[])(int, int) = {wholePart1, wholePart2, wholePart3, wholePart5, wholePart6};
+    string names[] = {"wholePart1", "wholePart2", "wholePart3", "wholePart5", "wholePart6"};
+    
+    for (int i = 0; i < 5; i++) {
+        cout << "\nФункция " << names[i] << ":" << endl;
+        try {
+            num = 100; den = 0;
+            int result = functions[i](num, den);
+            cout << "Целая часть " << num << "/" << den << " = " << result << endl;
+        }
+        catch (const char* error) {
+            cout << "Поймано const char*: " << error << endl;
+        }
+        catch (invalid_argument& e) {
+            cout << "Поймано invalid_argument: " << e.what() << endl;
+        }
+        catch (FractionException& e) {
+            cout << "Поймано FractionException: " << e.message << endl;
+        }
+        catch (MyFractionException& e) {
+            cout << "Поймано MyFractionException: " << e.what() << endl;
+        }
+        catch (...) {
+            cout << "Поймано неизвестное исключение" << endl;
+        }
+    }
+    
+    cout << "\n=== ПРОГРАММА ЗАВЕРШЕНА ===" << endl;
+    return 0;
+}
