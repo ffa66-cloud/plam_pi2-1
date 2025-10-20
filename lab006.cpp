@@ -63,3 +63,58 @@ public:
         
 
         int maxSize = (size > other.getSize()) ? size : other.getSize();
+                Decimal* result = new Decimal(maxSize);
+        
+        for (int i = 0; i < maxSize; i++) {
+            unsigned char sum = 0;
+            if (i < size) sum += data[i];
+            if (i < other.getSize()) sum += other[i];
+            (*result)[i] = sum % 10;  // берем только последнюю цифру
+        }
+        
+        return result;
+    }
+
+    void displayDecimal() {
+       
+        for (int i = size - 1; i >= 0; i--) {
+            cout << (int)data[i];
+        }
+        cout << endl;
+    }
+};
+
+
+class Hex : public Array {
+public:
+    Hex(int s = 0, unsigned char value = 0) : Array(s, value) {}
+
+    
+    Array* add(Array& other) override {
+        cout << "Сложение шестнадцатеричных чисел" << endl;
+        
+      
+        int maxSize = (size > other.getSize()) ? size : other.getSize();
+        Hex* result = new Hex(maxSize);
+        
+        for (int i = 0; i < maxSize; i++) {
+            unsigned char sum = 0;
+            if (i < size) sum += data[i];
+            if (i < other.getSize()) sum += other[i];
+            (*result)[i] = sum % 16;  
+        }
+        
+        return result;
+    }
+
+    void displayHex() {
+        cout << "0x";
+        for (int i = size - 1; i >= 0; i--) {
+            if (data[i] < 10) {
+                cout << (int)data[i];
+            } else {
+                cout << (char)('A' + data[i] - 10);
+            }
+        }
+        cout << endl;
+    }
