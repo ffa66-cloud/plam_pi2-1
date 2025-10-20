@@ -99,3 +99,21 @@ int main() {
         cout << "Целая часть " << num << "/" << den << " = " << wholePart2(num, den) << endl;
     }
     catch (const char* error) {
+             cout << "Поймано исключение: " << error << endl;
+    }
+    
+    cout << "\n3. СО СТАНДАРТНЫМ ИСКЛЮЧЕНИЕМ:" << endl;
+    try {
+        num = 20; den = 6;
+        cout << "Целая часть " << num << "/" << den << " = " << wholePart3(num, den) << endl;
+        
+        num = 20; den = 0;
+        cout << "Целая часть " << num << "/" << den << " = " << wholePart3(num, den) << endl;
+    }
+    catch (invalid_argument& e) {
+        cout << "Поймано invalid_argument: " << e.what() << endl;
+    }
+    
+    cout << "\n4. С noexcept (НЕ кидает исключения):" << endl;
+    num = 25; den = 7;
+    cout << "Целая часть " << num << "/" << den << " = " << wholePart4(num, den) << endl;
